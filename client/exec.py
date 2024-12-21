@@ -71,17 +71,21 @@ def orquestrador():
             print('dentro do horario de execução')
             print('buscando lote')
             lote = obter_lote()
-            for registro in lote:
-                print(registro)
+            if len(lote) == 0:
+                print("não temos mais lotes para trabalhar")
+                dormir = 1
+            else:
+                for registro in lote:
+                    print(registro)
+                print('finalizado lote')
+                dormir = 0
 
 
-            print('finalizado lote')
         else:
             print('fora do horario de execução')
+            dormir = 1
 
-
-
-        sleep(configs_finais["sleep_time"])
+        if dormir: sleep(configs_finais["sleep_time"])
         pass
     pass
 
