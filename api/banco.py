@@ -188,16 +188,16 @@ def select_lote(rotina,lote,max_qt_lote,usr_host):
                     )
             
             para_update_tratado = str(para_update).replace('[','').replace(']','')
-            agora = datetime.now().strftime('%Y%-m%-d% H%:M%:S')
+            agora = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             sql_update = f"""
             UPDATE lotes
             SET 
               status_desc       ='RESERVADO'
             , status_usrhost    ='{usr_host}'
             , status_dtm        ='{agora}'
-            WHERE id_regin({para_update_tratado})
+            WHERE id_reg in ({para_update_tratado})
             """
-            executar(sql,'commit')            
+            executar(sql_update,'commit')            
             return registros
     except:
         return []

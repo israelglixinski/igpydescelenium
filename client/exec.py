@@ -46,8 +46,8 @@ def obter_lote():
     max_qt_lote     = configs_finais['max_qt_lote']
     usr_host        = configs_finais['usr_host']
     solicitacao     = {"rotina":rotina,"lote":lote,"max_qt_lote":max_qt_lote,"usr_host":usr_host}
-    horarios        = requests.get(f'{url}lotes',json=solicitacao).json()['resposta']
-    return horarios
+    lote            = requests.get(f'{url}lotes',json=solicitacao).json()['resposta']
+    return lote
 
 
 
