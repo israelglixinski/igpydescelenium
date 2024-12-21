@@ -105,7 +105,7 @@ def orquestrador():
                             if retorno['SITUACAO'] == 'SUB_LOOP': 
                                 nu_prox_passo = retorno['NU_PROX_PASSO'] 
                                 prox_passo = passos['acoes'][str(nu_prox_passo)]
-                                retorno = centro_acoes.acionador(prox_passo)
+                                retorno = sub_loop(prox_passo)
                             else:
                                 return retorno
                         sub_loop(passo)

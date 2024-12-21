@@ -32,8 +32,7 @@ def acionador(passo):
         retorno['SITUACAO']='FINALIZADO'
 
 
-    resultado = ''
-    return resultado
+    return retorno
 
 def sub_loop(passo_atual):
     passos = ''
