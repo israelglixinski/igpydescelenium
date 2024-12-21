@@ -19,9 +19,11 @@ def configs():
     banco.conectar()
     configs_main        = banco.select_configs_main()
     configs_usrhost     = banco.select_configs_usrhost(usr_host)  
+    configs_adicionais  = {'usr_host':usr_host}
     configs_finais      = {**configs_usrhost}
-    configs_finais.update({k:v for k,v in configs_main  .items() if k not in configs_finais})
-    configs_finais.update({k:v for k,v in configs_locais.items() if k not in configs_finais})
+    configs_finais.update({k:v for k,v in configs_main          .items() if k not in configs_finais})
+    configs_finais.update({k:v for k,v in configs_locais        .items() if k not in configs_finais})
+    configs_finais.update({k:v for k,v in configs_adicionais    .items() if k not in configs_finais})
     resposta = {'resposta':configs_finais}
     return jsonify(resposta)
 
