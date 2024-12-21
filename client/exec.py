@@ -55,6 +55,10 @@ def orquestrador():
     passos = obter_passos()
     horarios = obter_horarios()
     dias_da_semana = ['SEG','TER','QUA','QUI','SEX','SAB','DOM']
+    
+    ##### primeiros passos
+    
+    
     while True:
         indice_dia = datetime.now().weekday()
         dia_da_semana =  dias_da_semana[indice_dia]
@@ -75,6 +79,11 @@ def orquestrador():
                 print("não temos mais lotes para trabalhar")
                 dormir = 1
             else:
+    
+    
+                #### passos pré lotes
+    
+    
                 for registro in lote:
                     print(f'Iniciando o registro: {registro['id_reg']}')
                     for numero_passo in passos['ordem_acoes']:
@@ -96,6 +105,11 @@ def orquestrador():
 
                     
                     print(f'Finalizado o registro: {registro['id_reg']}')
+                
+                
+                ##### passos pos lotes
+                
+                
                 print('finalizado lote')
                 dormir = 0
 
