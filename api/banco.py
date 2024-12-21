@@ -87,9 +87,9 @@ def select_passos(rotina):
 
         else:
             acoes = {}
+            ordem_acoes = []
             for linha in consulta:
                 ordem = linha[0]
-                ordem_acoes = []
                 ordem_acoes.append(ordem)
                 acoes[ordem] = {
                       "ordem"       : ordem
@@ -197,7 +197,7 @@ def select_lote(rotina,lote,max_qt_lote,usr_host):
             , status_dtm        ='{agora}'
             WHERE id_reg in ({para_update_tratado})
             """
-            executar(sql_update,'commit')            
+            # executar(sql_update,'commit')            
             return registros
     except:
         return []

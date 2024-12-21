@@ -76,7 +76,26 @@ def orquestrador():
                 dormir = 1
             else:
                 for registro in lote:
-                    print(registro)
+                    print(f'Iniciando o registro: {registro['id_reg']}')
+                    for numero_passo in passos['ordem_acoes']:
+                        passo = passos['acoes'][str(numero_passo)]
+                        
+                        acao      = passo['acao'      ] 
+                        ordem     = passo['ordem'     ] 
+                        variavel1 = passo['variavel1' ] 
+                        variavel2 = passo['variavel2' ] 
+                        variavel3 = passo['variavel3' ] 
+                        variavel4 = passo['variavel4' ] 
+                        variavel5 = passo['variavel5' ] 
+
+                        print(ordem,acao,variavel1,variavel2,variavel3,variavel4,variavel5)
+
+                        if acao == 'FIM_DA_ROTINA':
+                            break
+
+
+                    
+                    print(f'Finalizado o registro: {registro['id_reg']}')
                 print('finalizado lote')
                 dormir = 0
 
