@@ -4,6 +4,7 @@ import json
 import os
 from time import sleep
 from datetime import datetime
+import centro_acoes
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 
@@ -98,6 +99,19 @@ def orquestrador():
                         variavel5 = passo['variavel5' ] 
 
                         print(ordem,acao,variavel1,variavel2,variavel3,variavel4,variavel5)
+
+                        def sub_loop(passo_atual):
+                            retorno = centro_acoes.acionador(passo_atual)
+                            if retorno['SITUACAO'] == 'SUB_LOOP': 
+                                nu_prox_passo = retorno['NU_PROX_PASSO'] 
+                                prox_passo = passos['acoes'][str(nu_prox_passo)]
+                                retorno = centro_acoes.acionador(prox_passo)
+                            else:
+                                return retorno
+                        sub_loop(passo)
+
+                   
+
 
                         if acao == 'FIM_DA_ROTINA':
                             break
