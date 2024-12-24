@@ -1,10 +1,11 @@
+from datetime import datetime
+from time import sleep
+import centro_acoes
 import requests
 import socket
 import json
+import ast
 import os
-from time import sleep
-from datetime import datetime
-import centro_acoes
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 passos = None
@@ -52,14 +53,13 @@ def obter_lote():
     lote            = requests.get(f'{url}lotes',json=solicitacao).json()['resposta']
     return lote
 
-
-def executa_passo(passo_atual):
+def executa_passo(passo_atual, identificador=0, varia_dicts_reg={}):
     global passos
-    retorno = centro_acoes.acionador(passo_atual)
+    retorno = centro_acoes.acionador(passo_atual, identificador, varia_dicts_reg)
     if retorno['SITUACAO'] == 'SUB_PASSO': 
         nu_prox_passo = retorno['NU_PROX_PASSO'] 
         prox_passo = passos['acoes'][str(nu_prox_passo)]
-        retorno = executa_passo(prox_passo)
+        retorno = executa_passo(prox_passo, identificador, varia_dicts_reg)
     else:
         return retorno
 
@@ -110,12 +110,21 @@ def orquestrador():
                 except: pass            
     
                 for registro in lote:
+                    id_reg        = registro['id_reg'       ]
+                    identificador = registro['identificador']
+                    var_dict      = registro['var_dict'     ]                    
                     print(f'Iniciando o registro: {registro['id_reg']}')
+                    
+                    try:
+                        varia_dicts_reg = ast.literal_eval(var_dict)
+                    except:
+                        varia_dicts_reg = None
+ 
  
                     try:
                         for numero_passo in passos['ordem_acoes']["IN_LOOP"]:
                             passo = passos['acoes'][str(numero_passo)]
-                            executa_passo(passo)
+                            executa_passo(passo, identificador, varia_dicts_reg)
                     except: pass
 
                     

@@ -186,7 +186,7 @@ def select_horarios(horario):
 
 def select_lote(rotina,lote,max_qt_lote,usr_host):
     sql=f"""
-    SELECT id_reg, variavel1, variavel2, variavel3, variavel4, variavel5, variavel6, variavel7, variavel8, variavel9
+    SELECT id_reg, identificador, var_dict
     FROM lotes
     WHERE lote = {lote}
     AND rotina = {rotina}
@@ -204,16 +204,9 @@ def select_lote(rotina,lote,max_qt_lote,usr_host):
                 para_update.append(linha[0])
                 registros.append(
                     {
-                      "id_reg"    : linha[0]
-                    , "variavel1" : linha[1]
-                    , "variavel2" : linha[2]
-                    , "variavel3" : linha[3]
-                    , "variavel4" : linha[4]
-                    , "variavel5" : linha[5]
-                    , "variavel6" : linha[6]
-                    , "variavel7" : linha[7]
-                    , 'variavel8' : linha[8]
-                    , "variavel9" : linha[9]
+                      "id_reg"          : linha[0]
+                    , "identificador"   : linha[1]
+                    , "var_dict"        : linha[2]
                     }
                     )
             
