@@ -1,8 +1,4 @@
 
-
-
-
-
 from selenium.webdriver.edge.service import Service
 from selenium import webdriver
 from time import sleep
@@ -52,14 +48,18 @@ def acionador(passo):
 def func_OBTER_DRIVER():
     global endereco_driver,diretorio_atual
     diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-    
-
-    pass
+    diretorio_webdrivers = f"{diretorio_atual}\\webdrivers"
+    subpastas_com_webdriver = []
+    for root, dirs, files in os.walk(diretorio_webdrivers):
+        if "msedgedriver.exe" in files:
+            subpastas_com_webdriver.append(str(root).split('\\')[-1])
+    endereco_driver = f"{diretorio_webdrivers}\\{subpastas_com_webdriver[0]}\\msedgedriver.exe"
+    return endereco_driver
 
 def func_INICIAR_NAVEGADOR(): 
     global endereco_driver, navegador
     try:
-        endereco_driver = f"./client/webdrivers/131.0.2903.112/msedgedriver.exe"
+        endereco_driver = func_OBTER_DRIVER()
         servico = Service(endereco_driver)
         navegador = webdriver.Edge(service=servico)    
         return "OK"
@@ -84,5 +84,5 @@ def func_PASS():
 
 
 if __name__ == "__main__":
-    func_OBTER_DRIVER()
+    func_INICIAR_NAVEGADOR()
     pass
