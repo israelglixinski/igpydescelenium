@@ -1,18 +1,32 @@
+
+
+
+
+
+from selenium.webdriver.edge.service import Service
+from selenium import webdriver
+from time import sleep
 import ast
+import os
+
+
+
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+endereco_driver = None
+navegador = None
+
 
 
 def acionador(passo):
-    
-    acao      = passo['acao'      ] 
-    ordem     = passo['ordem'     ] 
-    variavel1 = passo['variavel1' ] 
-    variavel2 = passo['variavel2' ] 
-    variavel3 = passo['variavel3' ] 
-    variavel4 = passo['variavel4' ] 
-    variavel5 = passo['variavel5' ] 
+
+    estagio     = passo["estagio"     ]
+    ordem       = passo["ordem"       ]
+    acao        = passo["acao"        ]
+    var_dict    = passo["var_dict"    ]
+    sub_passos  = passo["sub_passos"  ]
 
     try:
-        varia_dicts = ast.literal_eval(variavel1)
+        varia_dicts = ast.literal_eval(var_dict)
     except:
         varia_dicts = None
     retorno = {}
@@ -25,8 +39,8 @@ def acionador(passo):
         print(f"A função '{acao}' não foi encontrada ou não é executável.")
 
 
-    if variavel5 == 'SUB_LOOP':
-        retorno['SITUACAO']='SUB_LOOP'
+    if sub_passos != None:
+        retorno['SITUACAO']='SUB_PASSOS'
         retorno['NU_PROX_PASSO'] = varia_dicts[resp_func]
     else:
         retorno['SITUACAO']='FINALIZADO'
@@ -34,47 +48,41 @@ def acionador(passo):
 
     return retorno
 
-def sub_loop(passo_atual):
-    passos = ''
-    retorno = acionador(passo_atual)
-    if retorno['SITUACAO'] == 'SUB_LOOP': 
-        nu_prox_passo = retorno['NU_PROX_PASSO'] 
-        prox_passo = passos['acoes'][str(nu_prox_passo)]
-        retorno = acionador(prox_passo)
-    else:
-        return retorno
+
+def func_OBTER_DRIVER():
+    global endereco_driver,diretorio_atual
+    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+    
+
+    pass
+
+def func_INICIAR_NAVEGADOR(): 
+    global endereco_driver, navegador
+    try:
+        endereco_driver = f"./client/webdrivers/131.0.2903.112/msedgedriver.exe"
+        servico = Service(endereco_driver)
+        navegador = webdriver.Edge(service=servico)    
+        return "OK"
+    except:
+        return "FALHA"
+
+def func_ACESSA_URL(): 
+    global navegador
+    navegador.get('https://www.google.com')
+    pass
+
+def func_DORME(): 
+    sleep(20)
+    pass
+
+def func_PROCURA_ELEMENTO(): 
+    pass
+
+def func_PASS(): 
+    pass
 
 
 
-
-
-
-
-def func_INICIA_NAVEGADOR   ():
-    return 'OK'
-
-def func_DORME              ():
-    return 'OK'
-
-def func_VERIFICA_NAVEGADOR ():
-    return 'NAO'
-
-def func_DORME              ():
-    return 'OK'
-
-def func_PASS               ():
-    return 'OK'
-
-def func_INICIA_NAVEGADOR   ():
-    return 'OK'
-
-def func_FINALIZA_NAVEGADOR ():
-    return 'OK'
-
-def func_DORME              ():
-    return 'OK'
-
-def func_FIM_DA_ROTINA      ():
-    return 'OK'
-
-
+if __name__ == "__main__":
+    func_OBTER_DRIVER()
+    pass

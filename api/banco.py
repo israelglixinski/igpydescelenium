@@ -73,13 +73,12 @@ def select_configs_usrhost(usrhost):
 
 def select_passos(rotina):
     sql=f"""
-    SELECT ordem, acao, variavel1, variavel2, variavel3, variavel4, variavel5
+    SELECT estagio, ordem, acao, var_dict, sub_passos
     FROM passos
     WHERE rotina = {rotina}
     AND ativo = 1
     ORDER BY ordem ASC
     """
-
     try:
         consulta = executar(sql,'select')
         if len(consulta) == 0:
@@ -87,22 +86,53 @@ def select_passos(rotina):
 
         else:
             acoes = {}
-            ordem_acoes = []
+            ordem_acoes         = []
+            ordem_INICIAL       = []
+            ordem_PRE_HORA      = []
+            ordem_PRE_LOOP      = []
+            ordem_IN_LOOP       = []
+            ordem_POS_LOOP      = []
+            ordem_POS_HORA      = []
+            ordem_SUB_PASSO     = []
             for linha in consulta:
-                ordem = linha[0]
-                ordem_acoes.append(ordem)
+                ordem = linha[1]
+                ordem_acoes     .append(ordem)
+                if linha[0] == "INICIAL"    : ordem_INICIAL   .append(ordem)             
+                if linha[0] == "PRE_HORA"   : ordem_PRE_HORA  .append(ordem)             
+                if linha[0] == "PRE_LOOP"   : ordem_PRE_LOOP  .append(ordem)             
+                if linha[0] == "IN_LOOP"    : ordem_IN_LOOP   .append(ordem)             
+                if linha[0] == "POS_LOOP"   : ordem_POS_LOOP  .append(ordem)             
+                if linha[0] == "POS_HORA"   : ordem_POS_HORA  .append(ordem)             
+                if linha[0] == "SUB_PASSO"  : ordem_SUB_PASSO .append(ordem)             
                 acoes[ordem] = {
-                      "ordem"       : ordem
-                    , "acao"        : linha[1]
-                    , "variavel1"   : linha[2]
-                    , "variavel2"   : linha[3]
-                    , "variavel3"   : linha[4]
-                    , "variavel4"   : linha[5]
-                    , "variavel5"   : linha[6]
+                      "estagio"     : linha[0]
+                    , "ordem"       : linha[1]
+                    , "acao"        : linha[2]
+                    , "var_dict"    : linha[3]
+                    , "sub_passos"  : linha[4]
                     }
-                
-            ordem_acoes.sort()
-            resposta = {"ordem_acoes":ordem_acoes, "acoes":acoes}
+                #estagio, ordem, acao, var_dict, sub_passos
+            ordem_acoes     .sort()
+            ordem_INICIAL   .sort()
+            ordem_PRE_HORA  .sort()
+            ordem_PRE_LOOP  .sort()
+            ordem_IN_LOOP   .sort()
+            ordem_POS_LOOP  .sort()
+            ordem_POS_HORA  .sort()
+            ordem_SUB_PASSO .sort()
+            resposta = {
+                "acoes":acoes
+                ,"ordem_acoes":{
+                     "TODAS"     : ordem_acoes     
+                    ,"INICIAL"   : ordem_INICIAL   
+                    ,"PRE_HORA"  : ordem_PRE_HORA  
+                    ,"PRE_LOOP"  : ordem_PRE_LOOP  
+                    ,"IN_LOOP"   : ordem_IN_LOOP   
+                    ,"POS_LOOP"  : ordem_POS_LOOP  
+                    ,"POS_HORA"  : ordem_POS_HORA  
+                    ,"SUB_PASSO" : ordem_SUB_PASSO 
+                    }
+                }
             return resposta
     except:
         return {"ordem_acoes":[], "acoes":{}}

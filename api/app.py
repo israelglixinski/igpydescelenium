@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from waitress import serve  
-import banco
+try: import banco
+except: from api import banco
 
 banco.conectar()
 app = Flask(__name__)

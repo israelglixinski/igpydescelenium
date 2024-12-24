@@ -7,6 +7,7 @@ from datetime import datetime
 import centro_acoes
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+passos = None
 
 def obter_configs_locais():
     config_file = open(f'{diretorio_atual}\\configs.json')    
@@ -27,6 +28,7 @@ def obter_configs_finais():
     return configs_finais
 
 def obter_passos():
+    global passos
     url = configs_finais['endpoint_api']
     rotina = configs_finais['rotina']
     solicitacao = {"rotina":rotina}
@@ -51,16 +53,36 @@ def obter_lote():
     return lote
 
 
+def executa_passo(passo_atual):
+    global passos
+    retorno = centro_acoes.acionador(passo_atual)
+    if retorno['SITUACAO'] == 'SUB_PASSO': 
+        nu_prox_passo = retorno['NU_PROX_PASSO'] 
+        prox_passo = passos['acoes'][str(nu_prox_passo)]
+        retorno = executa_passo(prox_passo)
+    else:
+        return retorno
 
 def orquestrador():
+    global passos
     passos = obter_passos()
     horarios = obter_horarios()
     dias_da_semana = ['SEG','TER','QUA','QUI','SEX','SAB','DOM']
     
-    ##### primeiros passos
-    
-    
+    try:
+        for numero_passo in passos['ordem_acoes']["INICIAL"]:
+            passo = passos['acoes'][str(numero_passo)]
+            executa_passo(passo)
+    except: pass
+
     while True:
+        
+        try:
+            for numero_passo in passos['ordem_acoes']["PRE_HORA"]:
+                passo = passos['acoes'][str(numero_passo)]
+                executa_passo(passo)
+        except: pass    
+        
         indice_dia = datetime.now().weekday()
         dia_da_semana =  dias_da_semana[indice_dia]
         horarios_hoje = horarios[dia_da_semana]
@@ -81,47 +103,30 @@ def orquestrador():
                 dormir = 1
             else:
     
-    
-                #### passos pré lotes
-    
+                try:
+                    for numero_passo in passos['ordem_acoes']["PRE_LOOP"]:
+                        passo = passos['acoes'][str(numero_passo)]
+                        executa_passo(passo)
+                except: pass            
     
                 for registro in lote:
                     print(f'Iniciando o registro: {registro['id_reg']}')
-                    for numero_passo in passos['ordem_acoes']:
-                        passo = passos['acoes'][str(numero_passo)]
-                        
-                        acao      = passo['acao'      ] 
-                        ordem     = passo['ordem'     ] 
-                        variavel1 = passo['variavel1' ] 
-                        variavel2 = passo['variavel2' ] 
-                        variavel3 = passo['variavel3' ] 
-                        variavel4 = passo['variavel4' ] 
-                        variavel5 = passo['variavel5' ] 
-
-                        print(ordem,acao,variavel1,variavel2,variavel3,variavel4,variavel5)
-
-                        def sub_loop(passo_atual):
-                            retorno = centro_acoes.acionador(passo_atual)
-                            if retorno['SITUACAO'] == 'SUB_LOOP': 
-                                nu_prox_passo = retorno['NU_PROX_PASSO'] 
-                                prox_passo = passos['acoes'][str(nu_prox_passo)]
-                                retorno = sub_loop(prox_passo)
-                            else:
-                                return retorno
-                        sub_loop(passo)
-
-                   
-
-
-                        if acao == 'FIM_DA_ROTINA':
-                            break
-
+ 
+                    try:
+                        for numero_passo in passos['ordem_acoes']["IN_LOOP"]:
+                            passo = passos['acoes'][str(numero_passo)]
+                            executa_passo(passo)
+                    except: pass
 
                     
                     print(f'Finalizado o registro: {registro['id_reg']}')
                 
                 
-                ##### passos pos lotes
+                try:
+                    for numero_passo in passos['ordem_acoes']["POS_LOOP"]:
+                        passo = passos['acoes'][str(numero_passo)]
+                        executa_passo(passo)
+                except: pass
                 
                 
                 print('finalizado lote')
@@ -131,6 +136,12 @@ def orquestrador():
         else:
             print('fora do horario de execução')
             dormir = 1
+
+        try:
+            for numero_passo in passos['ordem_acoes']["POS_HORA"]:
+                passo = passos['acoes'][str(numero_passo)]
+                executa_passo(passo)
+        except: pass
 
         if dormir: sleep(configs_finais["sleep_time"])
         pass

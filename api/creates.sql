@@ -2,15 +2,13 @@ CREATE TABLE passos (
 	id_reg 		INTEGER PRIMARY KEY AUTOINCREMENT,
 	dtm_insert 	DATETIME DEFAULT current_timestamp,
 	rotina 		INTEGER,
+	estagio		TEXT,
 	ordem 		INTEGER,
 	acao 		TEXT,
 	ativo 		INTEGER,
-	variavel1 	TEXT,
-	variavel2 	TEXT,
-	variavel3 	TEXT,
-	variavel4 	TEXT,
-	variavel5 	TEXT
-    );
+	var_dict 	TEXT,
+	sub_passos 	TEXT
+	);
 
 CREATE TABLE lotes (
 	id_reg 			INTEGER PRIMARY KEY AUTOINCREMENT,
