@@ -3,10 +3,16 @@ from flask_cors import CORS
 from waitress import serve  
 try: import banco
 except: from api import banco
+import os
 
 banco.conectar()
 app = Flask(__name__)
 CORS(app, resources={r"*":{"origins":"*"}})
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+
+
+
+
 
 @app.route("/")
 def home():
@@ -56,6 +62,27 @@ def lotes():
     banco.conectar()
     novo_lote = banco.select_lote(rotina,lote,max_qt_lote,usr_host)
     resposta = {'resposta':novo_lote}
+    return jsonify(resposta)
+
+@app.route("/verifica_drivers", methods=['GET'])
+def lotes():
+    global diretorio_atual
+    recebido        = request.get_json()
+    drivers_locais  = recebido["drivers_locais"]
+    
+    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+    diretorio_webdrivers = f"{diretorio_atual}\\webdrivers"
+    subpastas_com_webdriver = []
+    for root, dirs, files in os.walk(diretorio_webdrivers):
+        if "msedgedriver.exe" in files:
+            subpastas_com_webdriver.append(str(root).split('\\')[-1])
+    
+    
+    ###### conntinuar daqui    
+    
+    
+    novos_drivers = []
+    resposta = {'resposta':novos_drivers}
     return jsonify(resposta)
 
 def iniciar():
