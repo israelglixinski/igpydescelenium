@@ -122,11 +122,11 @@ def orquestrador():
                         varia_dicts_reg = None
  
  
-                    # try:
-                    for numero_passo in passos['ordem_acoes']["IN_LOOP"]:
-                        passo = passos['acoes'][str(numero_passo)]
-                        executa_passo(passo, identificador, varia_dicts_reg)
-                    # except: pass
+                    try:
+                        for numero_passo in passos['ordem_acoes']["IN_LOOP"]:
+                            passo = passos['acoes'][str(numero_passo)]
+                            executa_passo(passo, identificador, varia_dicts_reg)
+                    except: pass
 
                     
                     print(f'Finalizado o registro: {registro['id_reg']}')
