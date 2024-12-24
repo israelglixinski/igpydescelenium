@@ -1,5 +1,7 @@
 
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.edge.service import Service
+from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from time import sleep
 import ast
@@ -56,7 +58,7 @@ def func_OBTER_DRIVER           (identificador, varia_dicts_reg ,varia_dicts_pas
     endereco_driver = f"{diretorio_webdrivers}\\{subpastas_com_webdriver[0]}\\msedgedriver.exe"
     return endereco_driver
 
-def func_INICIAR_NAVEGADOR      (identificador, varia_dicts_reg ,varia_dicts_pas): 
+def func_INICIA_NAVEGADOR       (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
     try:
         endereco_driver = func_OBTER_DRIVER(identificador, varia_dicts_reg, varia_dicts_pas)
@@ -66,7 +68,7 @@ def func_INICIAR_NAVEGADOR      (identificador, varia_dicts_reg ,varia_dicts_pas
     except:
         return "FALHA"
 
-def func_VERIFICAR_NAVEGADOR    (identificador, varia_dicts_reg ,varia_dicts_pas): 
+def func_VERIFICA_NAVEGADOR     (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
     try:    
         navegador.get("about:blank")
@@ -108,11 +110,37 @@ def func_PROCURA_ELEMENTO       (identificador, varia_dicts_reg ,varia_dicts_pas
     except:
         return "NAO"
 
+def func_ENVIA_TEXTO            (identificador, varia_dicts_reg ,varia_dicts_pas): 
+    tipo = varia_dicts_pas['tipo']
+    elemento = varia_dicts_pas['elemento']
+    texto= varia_dicts_pas['texto']
+    try:
+        navegador.find_element(tipo,elemento).send_keys(texto)
+        return "OK"
+    except:
+        return "FALHA"
+
+def func_ENVIA_TECLA            (identificador, varia_dicts_reg ,varia_dicts_pas): 
+    tipo = varia_dicts_pas['tipo']
+    elemento = varia_dicts_pas['elemento']
+    tecla_string= varia_dicts_pas['tecla']
+    
+    try: 
+        tecla = getattr(Keys,str(tecla_string).upper())
+    except:
+        tecla = None
+    
+    try:
+        navegador.find_element(tipo,elemento).send_keys(tecla)
+        return "OK"
+    except:
+        return "FALHA"
+
 def func_PASS                   (identificador, varia_dicts_reg ,varia_dicts_pas): 
     pass
 
 
 
 if __name__ == "__main__":
-    func_INICIAR_NAVEGADOR()
+    func_INICIA_NAVEGADOR()
     pass
