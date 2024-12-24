@@ -136,6 +136,15 @@ def func_ENVIA_TECLA            (identificador, varia_dicts_reg ,varia_dicts_pas
     except:
         return "FALHA"
 
+def func_ENVIA_CLICK            (identificador, varia_dicts_reg ,varia_dicts_pas): 
+    tipo = varia_dicts_pas['tipo']
+    elemento = varia_dicts_pas['elemento']
+    try:
+        navegador.find_element(tipo,elemento).click()
+        return "OK"
+    except:
+        return "FALHA"
+
 def func_PASS                   (identificador, varia_dicts_reg ,varia_dicts_pas): 
     pass
 
