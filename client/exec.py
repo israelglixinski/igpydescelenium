@@ -55,8 +55,9 @@ def obter_lote():
 
 def executa_passo(passo_atual, identificador=0, varia_dicts_reg={}):
     global passos
+    print(f'passo: {passo_atual['ordem']}')
     retorno = centro_acoes.acionador(passo_atual, identificador, varia_dicts_reg)
-    if retorno['SITUACAO'] == 'SUB_PASSO': 
+    if retorno['SITUACAO'] == 'SUB_PASSOS': 
         nu_prox_passo = retorno['NU_PROX_PASSO'] 
         prox_passo = passos['acoes'][str(nu_prox_passo)]
         retorno = executa_passo(prox_passo, identificador, varia_dicts_reg)
@@ -121,11 +122,11 @@ def orquestrador():
                         varia_dicts_reg = None
  
  
-                    try:
-                        for numero_passo in passos['ordem_acoes']["IN_LOOP"]:
-                            passo = passos['acoes'][str(numero_passo)]
-                            executa_passo(passo, identificador, varia_dicts_reg)
-                    except: pass
+                    # try:
+                    for numero_passo in passos['ordem_acoes']["IN_LOOP"]:
+                        passo = passos['acoes'][str(numero_passo)]
+                        executa_passo(passo, identificador, varia_dicts_reg)
+                    # except: pass
 
                     
                     print(f'Finalizado o registro: {registro['id_reg']}')

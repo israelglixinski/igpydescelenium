@@ -18,15 +18,8 @@ CREATE TABLE lotes (
 	status_desc		TEXT,
 	status_usrhost 	TEXT,
 	status_dtm 		DATETIME,
-	variavel1 		TEXT,
-	variavel2 		TEXT,
-	variavel3 		TEXT,
-	variavel4 		TEXT,
-	variavel5 		TEXT,
-	variavel6 		TEXT,
-	variavel7 		TEXT,
-	variavel8 		TEXT,
-	variavel9 		TEXT
+	identificador 	TEXT,
+	var_dict 		TEXT
 	);	
 
 CREATE TABLE configs_main (
