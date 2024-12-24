@@ -58,6 +58,17 @@ def func_OBTER_DRIVER           (identificador, varia_dicts_reg ,varia_dicts_pas
     endereco_driver = f"{diretorio_webdrivers}\\{subpastas_com_webdriver[0]}\\msedgedriver.exe"
     return endereco_driver
 
+def func_CONFERE_DRIVERS           (identificador, varia_dicts_reg ,varia_dicts_pas):
+    global endereco_driver,diretorio_atual
+    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+    diretorio_webdrivers = f"{diretorio_atual}\\webdrivers"
+    subpastas_com_webdriver = []
+    for root, dirs, files in os.walk(diretorio_webdrivers):
+        if "msedgedriver.exe" in files:
+            subpastas_com_webdriver.append(str(root).split('\\')[-1])
+    endereco_driver = f"{diretorio_webdrivers}\\{subpastas_com_webdriver[0]}\\msedgedriver.exe"
+    return endereco_driver
+
 def func_INICIA_NAVEGADOR       (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
     try:
