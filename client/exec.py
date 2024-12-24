@@ -55,7 +55,7 @@ def obter_lote():
 
 def executa_passo(passo_atual, identificador=0, varia_dicts_reg={}):
     global passos
-    print(f'passo: {passo_atual['ordem']}')
+    print(f'{identificador} --- {passo_atual['ordem']} --- {passo_atual['acao']}')
     retorno = centro_acoes.acionador(passo_atual, identificador, varia_dicts_reg)
     if retorno['SITUACAO'] == 'SUB_PASSOS': 
         nu_prox_passo = retorno['NU_PROX_PASSO'] 

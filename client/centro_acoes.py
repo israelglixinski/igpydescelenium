@@ -45,7 +45,7 @@ def acionador(passo, identificador=0, varia_dicts_reg={}):
 
     return retorno
 
-def func_OBTER_DRIVER(identificador, varia_dicts_reg ,varia_dicts_pas):
+def func_OBTER_DRIVER           (identificador, varia_dicts_reg ,varia_dicts_pas):
     global endereco_driver,diretorio_atual
     diretorio_atual = os.path.dirname(os.path.abspath(__file__))
     diretorio_webdrivers = f"{diretorio_atual}\\webdrivers"
@@ -56,7 +56,7 @@ def func_OBTER_DRIVER(identificador, varia_dicts_reg ,varia_dicts_pas):
     endereco_driver = f"{diretorio_webdrivers}\\{subpastas_com_webdriver[0]}\\msedgedriver.exe"
     return endereco_driver
 
-def func_INICIAR_NAVEGADOR(identificador, varia_dicts_reg ,varia_dicts_pas): 
+def func_INICIAR_NAVEGADOR      (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
     try:
         endereco_driver = func_OBTER_DRIVER(identificador, varia_dicts_reg, varia_dicts_pas)
@@ -66,12 +66,32 @@ def func_INICIAR_NAVEGADOR(identificador, varia_dicts_reg ,varia_dicts_pas):
     except:
         return "FALHA"
 
-def func_ACESSA_URL(identificador, varia_dicts_reg ,varia_dicts_pas): 
-    global navegador
-    navegador.get('https://www.google.com')
-    pass
+def func_VERIFICAR_NAVEGADOR    (identificador, varia_dicts_reg ,varia_dicts_pas): 
+    global endereco_driver, navegador, servico
+    try:    
+        navegador.get("about:blank")
+        return "FUNCIONANDO"
+    except:
+        try:
+            try: navegador.quit()
+            except: pass
+            endereco_driver = func_OBTER_DRIVER(identificador, varia_dicts_reg, varia_dicts_pas)
+            servico = Service(endereco_driver)
+            navegador = webdriver.Edge(service=servico)    
+            return "REINICIADO"
+        except:
+            return "FALHA"
 
-def func_DORME(identificador, varia_dicts_reg ,varia_dicts_pas): 
+def func_ACESSA_URL             (identificador, varia_dicts_reg ,varia_dicts_pas): 
+    global navegador
+    try:
+        url = varia_dicts_pas["url"]
+        navegador.get(url)
+        return "OK"
+    except:
+        return "FALHA"
+
+def func_DORME                  (identificador, varia_dicts_reg ,varia_dicts_pas): 
     tempo = varia_dicts_pas['tempo']
     try:
         sleep(tempo)
@@ -79,7 +99,7 @@ def func_DORME(identificador, varia_dicts_reg ,varia_dicts_pas):
     except:
         return "FALHA"
 
-def func_PROCURA_ELEMENTO(identificador, varia_dicts_reg ,varia_dicts_pas): 
+def func_PROCURA_ELEMENTO       (identificador, varia_dicts_reg ,varia_dicts_pas): 
     tipo = varia_dicts_pas['tipo']
     elemento = varia_dicts_pas['elemento']
     try:
@@ -88,7 +108,7 @@ def func_PROCURA_ELEMENTO(identificador, varia_dicts_reg ,varia_dicts_pas):
     except:
         return "NAO"
 
-def func_PASS(identificador, varia_dicts_reg ,varia_dicts_pas): 
+def func_PASS                   (identificador, varia_dicts_reg ,varia_dicts_pas): 
     pass
 
 
