@@ -73,21 +73,33 @@ def func_OBTER_DRIVER           (identificador, varia_dicts_reg ,varia_dicts_pas
 
 def func_CONFERE_DRIVERS           (identificador, varia_dicts_reg ,varia_dicts_pas):
     global endereco_driver,diretorio_atual
-    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-    diretorio_webdrivers = f"{diretorio_atual}\\webdrivers"
-    subpastas_com_webdriver = []
-    for root, dirs, files in os.walk(diretorio_webdrivers):
-        if "msedgedriver.exe" in files:
-            subpastas_com_webdriver.append(str(root).split('\\')[-1])
-    drivers_locais  = subpastas_com_webdriver
-    solicitacao     = {"drivers_locais":drivers_locais}
-    configs_locais  = obter_configs_locais()
-    url = configs_locais['endpoint_api']
-    novos_drivers   = requests.get(f'{url}verifica_drivers',json=solicitacao).json()['resposta']    
-    for novo_driver in novos_drivers:
-        print(novo_driver["versao"])
-    print(type(novos_drivers))
-    return None
+    try:
+        diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+        diretorio_webdrivers = f"{diretorio_atual}\\webdrivers"
+        subpastas_com_webdriver = []
+        for root, dirs, files in os.walk(diretorio_webdrivers):
+            if "msedgedriver.exe" in files:
+                subpastas_com_webdriver.append(str(root).split('\\')[-1])
+        drivers_locais  = subpastas_com_webdriver
+        solicitacao     = {"drivers_locais":drivers_locais}
+        configs_locais  = obter_configs_locais()
+        url = configs_locais['endpoint_api']
+        novos_drivers   = requests.get(f'{url}verifica_drivers',json=solicitacao).json()['resposta']    
+        for novo_driver in novos_drivers:
+            nova_versao = novo_driver["versao"]
+            nova_base64 = novo_driver["base64"]
+            caminho_nova_versao = f"{diretorio_webdrivers}\\{nova_versao}"
+            if os.path.exists(caminho_nova_versao) and os.path.isdir(caminho_nova_versao): 
+                pass
+            else: 
+                os.makedirs(caminho_nova_versao, exist_ok=True)
+            dados_binarios = base64.b64decode(nova_base64.encode('utf-8'))
+            novo_arquivo_exe = f"{caminho_nova_versao}\\msedgedriver.exe"
+            with open(novo_arquivo_exe, 'wb') as novo_arquivo: 
+                novo_arquivo.write(dados_binarios)
+        return "OK"
+    except:
+        return "FALHA"
 
 def func_INICIA_NAVEGADOR       (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
