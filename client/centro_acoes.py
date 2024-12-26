@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from time import sleep
 import requests
+import base64
 import json
 import ast
 import os
@@ -82,10 +83,10 @@ def func_CONFERE_DRIVERS           (identificador, varia_dicts_reg ,varia_dicts_
     solicitacao     = {"drivers_locais":drivers_locais}
     configs_locais  = obter_configs_locais()
     url = configs_locais['endpoint_api']
-    novos_drivers   = requests.get(f'{url}lotes',json=solicitacao).json()['resposta']    
-    
-    
-    print(subpastas_com_webdriver)
+    novos_drivers   = requests.get(f'{url}verifica_drivers',json=solicitacao).json()['resposta']    
+    for novo_driver in novos_drivers:
+        print(novo_driver["versao"])
+    print(type(novos_drivers))
     return None
 
 def func_INICIA_NAVEGADOR       (identificador, varia_dicts_reg ,varia_dicts_pas): 

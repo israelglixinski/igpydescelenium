@@ -1,16 +1,19 @@
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from waitress import serve  
+import base64
+import os
+
 try: import banco
 except: from api import banco
-import os
+
+
 
 banco.conectar()
 app = Flask(__name__)
 CORS(app, resources={r"*":{"origins":"*"}})
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-
-
 
 
 
@@ -65,7 +68,7 @@ def lotes():
     return jsonify(resposta)
 
 @app.route("/verifica_drivers", methods=['GET'])
-def lotes():
+def verifica_drivers():
     global diretorio_atual
     recebido        = request.get_json()
     drivers_locais  = recebido["drivers_locais"]
@@ -76,12 +79,17 @@ def lotes():
     for root, dirs, files in os.walk(diretorio_webdrivers):
         if "msedgedriver.exe" in files:
             subpastas_com_webdriver.append(str(root).split('\\')[-1])
-    
-    
-    ###### conntinuar daqui    
-    
-    
     novos_drivers = []
+    for subpasta in subpastas_com_webdriver:
+        if subpasta not in drivers_locais:
+            arquivo = open(f"{diretorio_webdrivers}\\{subpasta}\\msedgedriver.exe", 'rb')
+            dados_binarios = arquivo.read()
+            arquivo.close()
+            dados_base64 = base64.b64encode(dados_binarios).decode('utf-8')
+            novos_drivers.append({
+                 "versao":subpasta
+                ,"base64":dados_base64
+                })
     resposta = {'resposta':novos_drivers}
     return jsonify(resposta)
 
