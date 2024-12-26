@@ -13,6 +13,7 @@ import os
 
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+diretorio_webdrivers = f"{diretorio_atual}\\webdrivers"
 endereco_driver = None
 navegador = None
 
@@ -114,13 +115,19 @@ def func_CONFERE_DRIVERS           (identificador, varia_dicts_reg ,varia_dicts_
 
 def func_INICIA_NAVEGADOR       (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
-    try:
-        endereco_driver = func_OBTER_DRIVER(identificador, varia_dicts_reg, varia_dicts_pas)
-        servico = Service(endereco_driver)
-        navegador = webdriver.Edge(service=servico)    
-        return "OK"
-    except:
-        return "FALHA"
+    
+    drivers_dict =  ast.literal_eval(configs_finais['webdrivers'])
+    ordem_drivers = [drivers_dict["1"],drivers_dict["2"],drivers_dict["3"]]
+    
+    for pasta_driver in ordem_drivers:
+        try:
+            servico = Service(f"{diretorio_webdrivers}\\{pasta_driver}\\msedgedriver.exe")
+            navegador = webdriver.Edge(service=servico)    
+            navegador.get("about:blank")
+            return "OK"
+        except:
+            pass
+    return "FALHA"
 
 def func_VERIFICA_NAVEGADOR     (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
@@ -131,10 +138,11 @@ def func_VERIFICA_NAVEGADOR     (identificador, varia_dicts_reg ,varia_dicts_pas
         try:
             try: navegador.quit()
             except: pass
-            endereco_driver = func_OBTER_DRIVER(identificador, varia_dicts_reg, varia_dicts_pas)
-            servico = Service(endereco_driver)
-            navegador = webdriver.Edge(service=servico)    
-            return "REINICIADO"
+            reiniciando = func_INICIA_NAVEGADOR       (None, None ,None)
+            if reiniciando == "OK":
+                return "REINICIADO" 
+            else:
+                return "FALHA_AO_REINICIAR"
         except:
             return "FALHA"
 
@@ -205,6 +213,6 @@ def func_PASS                   (identificador, varia_dicts_reg ,varia_dicts_pas
 
 
 if __name__ == "__main__":
-    # func_INICIA_NAVEGADOR()
-    func_CONFERE_DRIVERS(None,None,None)
+    func_INICIA_NAVEGADOR(None,None,None)
+    # func_CONFERE_DRIVERS(None,None,None)
     pass
