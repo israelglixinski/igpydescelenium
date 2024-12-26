@@ -4,6 +4,8 @@ from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from time import sleep
+import requests
+import json
 import ast
 import os
 
@@ -12,6 +14,16 @@ import os
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 endereco_driver = None
 navegador = None
+
+
+
+def obter_configs_locais():
+    config_file = open(f'{diretorio_atual}\\configs.json')    
+    configs_locais = json.load(config_file) 
+    config_file.close()
+    return configs_locais
+configs_locais = obter_configs_locais()
+url = configs_locais['endpoint_api']
 
 
 
@@ -66,8 +78,15 @@ def func_CONFERE_DRIVERS           (identificador, varia_dicts_reg ,varia_dicts_
     for root, dirs, files in os.walk(diretorio_webdrivers):
         if "msedgedriver.exe" in files:
             subpastas_com_webdriver.append(str(root).split('\\')[-1])
-    endereco_driver = f"{diretorio_webdrivers}\\{subpastas_com_webdriver[0]}\\msedgedriver.exe"
-    return endereco_driver
+    drivers_locais  = subpastas_com_webdriver
+    solicitacao     = {"drivers_locais":drivers_locais}
+    configs_locais  = obter_configs_locais()
+    url = configs_locais['endpoint_api']
+    novos_drivers   = requests.get(f'{url}lotes',json=solicitacao).json()['resposta']    
+    
+    
+    print(subpastas_com_webdriver)
+    return None
 
 def func_INICIA_NAVEGADOR       (identificador, varia_dicts_reg ,varia_dicts_pas): 
     global endereco_driver, navegador, servico
@@ -162,5 +181,6 @@ def func_PASS                   (identificador, varia_dicts_reg ,varia_dicts_pas
 
 
 if __name__ == "__main__":
-    func_INICIA_NAVEGADOR()
+    # func_INICIA_NAVEGADOR()
+    func_CONFERE_DRIVERS(None,None,None)
     pass
