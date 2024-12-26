@@ -31,7 +31,8 @@ CREATE TABLE configs_main (
 	delay 			INTEGER,
 	horarios_exec	INTEGER,	
 	sleep_time		INTEGER,
-	api_porta		INTEGER
+	api_porta		INTEGER,
+	webdrivers		TEXT
 	);
 
 

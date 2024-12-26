@@ -6,25 +6,15 @@ from selenium import webdriver
 from time import sleep
 import requests
 import base64
+import socket
 import json
 import ast
 import os
 
 
-
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 endereco_driver = None
 navegador = None
-
-
-
-def obter_configs_locais():
-    config_file = open(f'{diretorio_atual}\\configs.json')    
-    configs_locais = json.load(config_file) 
-    config_file.close()
-    return configs_locais
-configs_locais = obter_configs_locais()
-url = configs_locais['endpoint_api']
 
 
 
@@ -59,6 +49,27 @@ def acionador(passo, identificador=0, varia_dicts_reg={}):
 
 
     return retorno
+
+
+
+def func_OBTER_CONFIGS(identificador, varia_dicts_reg ,varia_dicts_pas):
+    global configs_locais, configs_finais
+    
+    config_file = open(f'{diretorio_atual}\\configs.json')    
+    configs_locais = json.load(config_file) 
+    config_file.close()    
+    
+    
+    user = os.getlogin()
+    hostname = socket.gethostname()
+    usrhost = f"{user}---{hostname}"
+    solicitacao = {"usrhost":usrhost,"configs_locais":configs_locais}
+    url = configs_locais['endpoint_api']
+    configs_finais = (requests.get(f'{url}configs',json=solicitacao).json())['resposta']
+    return configs_finais
+func_OBTER_CONFIGS(None,None,None)
+url = configs_locais['endpoint_api']
+
 
 def func_OBTER_DRIVER           (identificador, varia_dicts_reg ,varia_dicts_pas):
     global endereco_driver,diretorio_atual

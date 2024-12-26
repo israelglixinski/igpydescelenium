@@ -2,31 +2,13 @@ from datetime import datetime
 from time import sleep
 import centro_acoes
 import requests
-import socket
-import json
 import ast
 import os
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 passos = None
 
-def obter_configs_locais():
-    config_file = open(f'{diretorio_atual}\\configs.json')    
-    configs_locais = json.load(config_file) 
-    config_file.close()
-    return configs_locais
-configs_locais = obter_configs_locais()
 
-def obter_configs_finais():
-    global configs_locais, configs_finais
-    configs_locais = obter_configs_locais()
-    user = os.getlogin()
-    hostname = socket.gethostname()
-    usrhost = f"{user}---{hostname}"
-    solicitacao = {"usrhost":usrhost,"configs_locais":configs_locais}
-    url = configs_locais['endpoint_api']
-    configs_finais = (requests.get(f'{url}configs',json=solicitacao).json())['resposta']
-    return configs_finais
 
 def obter_passos():
     global passos
@@ -159,7 +141,7 @@ def orquestrador():
 
 def iniciar():
     global configs_finais
-    configs_finais = obter_configs_finais()
+    configs_finais = centro_acoes.func_OBTER_CONFIGS(None,None,None)
     orquestrador()
 
 

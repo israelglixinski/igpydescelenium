@@ -30,7 +30,7 @@ def executar(comando, retorno='off'):
 
 def select_configs_main():
     sql=f"""
-    SELECT rotina, lote, max_qt_lote, delay, horarios_exec, sleep_time, api_porta
+    SELECT rotina, lote, max_qt_lote, delay, horarios_exec, sleep_time, api_porta, 'webdrivers'
     FROM configs_main
     WHERE ativo = 1
     ORDER BY id_reg ASC
@@ -46,6 +46,7 @@ def select_configs_main():
     ,'horarios_exec' : consulta[4]                          
     ,'sleep_time'    : consulta[5]                      
     ,'api_porta'     : consulta[6]                      
+    ,'webdrivers'    : consulta[7]                      
     }
 
 def select_configs_usrhost(usrhost):
