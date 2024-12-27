@@ -421,63 +421,63 @@
         </mxGraphModel>
     </diagram>
     <diagram id="cDO0qXAaJdaLTDPVbefh" name="Página-2">
-        <mxGraphModel dx="2318" dy="638" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2094" dy="787" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="P591-CrMzEoQqIOI_2av-1" value="banco" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="360" y="120" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-120" y="140" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="P591-CrMzEoQqIOI_2av-2" value="api" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="240" y="200" width="120" height="60" as="geometry"/>
+                    <mxGeometry y="200" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="P591-CrMzEoQqIOI_2av-3" value="cleint" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="360" y="280" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="i1qsJU0mInsYedUV8980-1" value="front" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="120" y="280" width="120" height="60" as="geometry"/>
                 </mxCell>
+                <mxCell id="i1qsJU0mInsYedUV8980-1" value="front" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-120" y="280" width="120" height="60" as="geometry"/>
+                </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-2" value="front" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="480" y="360" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="240" y="360" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-3" value="configs" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="440" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="400" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-4" value="logs" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="520" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="400" y="520" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-5" value="iniciar" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="600" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="400" y="600" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-6" value="parar" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="680" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="400" y="680" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-7" value="auto atualizador" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="260" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="400" y="260" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-8" value="configs" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-40" y="360" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-280" y="360" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-9" value="passos" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-40" y="440" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-280" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-10" value="lotes" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-40" y="520" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-280" y="520" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-11" value="webdriver" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-40" y="680" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-280" y="680" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-12" value="horarios" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-40" y="600" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-280" y="600" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-13" value="main" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-200" y="360" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-440" y="360" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-14" value="userhost" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-360" y="360" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-600" y="360" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="i1qsJU0mInsYedUV8980-15" value="comandos" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="-40" y="760" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-280" y="760" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
